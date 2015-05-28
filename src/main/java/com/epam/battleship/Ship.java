@@ -1,20 +1,12 @@
 package com.epam.battleship;
 
 import com.epam.battleship.components.Coordinate;
-import com.epam.battleship.components.CoordinateSet;
 import com.epam.battleship.targets.Shape;
 
-import java.util.Iterator;
-
-public abstract class Ship {
+public abstract class Ship extends Shape {
 
     private Coordinate position;
-    private Shape      shape;
     private int        healPoint;
-
-    public Ship() {
-        shape = new Shape();
-    }
 
     public void setPosition(Coordinate coordinate) {
         position = coordinate;
@@ -70,39 +62,8 @@ public abstract class Ship {
         return healPoint > 0;
     }
 
-    public void addShapePoint(int posX, int posY) {
-        if (shape.add(posX, posY)) {
-            calcHealPoint();
-            shape.calcArea();
-        }
-    }
-
-    private void calcHealPoint() {
-        healPoint = shape.size();
-    }
-
-    public Iterator<Coordinate> getShapeIterator() {
-        return shape.iterator();
-    }
-
-    public CoordinateSet getShape() {
-        return shape.getPoints();
-    }
-
-    public int getTop() {
-        return shape.getTop();
-    }
-
-    public int getBottom() {
-        return shape.getBottom();
-    }
-
-    public int getLeft() {
-        return shape.getLeft();
-    }
-
-    public int getRight() {
-        return shape.getRight();
+    public void calcHealPoint() {
+        healPoint = size();
     }
 
     public void decHealPoint() {

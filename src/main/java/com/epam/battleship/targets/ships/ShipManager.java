@@ -61,7 +61,7 @@ public class ShipManager {
 
     private boolean isEmptyArea(Ship ship) {
         CoordinateSet commonArea = getReservedArea();
-        commonArea.retainAll(ship.getShape());
+        commonArea.retainAll(ship.getPoints());
         return commonArea.isEmpty();
     }
 
@@ -87,7 +87,7 @@ public class ShipManager {
         Iterator<Ship> iterator = ships.iterator();
         while (iterator.hasNext()) {
             Ship ship = iterator.next();
-            coordinateSet.addAll(ship.getShape());
+            coordinateSet.addAll(ship.getPoints());
         }
         return coordinateSet;
     }
@@ -102,7 +102,7 @@ public class ShipManager {
         Iterator<Ship> iterator = ships.iterator();
         while (iterator.hasNext()) {
             Ship ship = iterator.next();
-            CoordinateSet shape = ship.getShape();
+            CoordinateSet shape = ship.getPoints();
             if (shape.contains(coordinate)) {
                 result = ship;
             }

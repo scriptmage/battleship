@@ -75,7 +75,7 @@ public class FileBattleField extends BattleField {
             while (valueOfFields.hasMoreTokens()) {
                 String field = valueOfFields.nextToken();
                 if (field.equals("x")) {
-                    pointsOfShape.add(dimensionX, dimensionY);
+                    pointsOfShape.addShapePoint(dimensionX, dimensionY);
                 } else if (field.matches("^\\d+$")) {
                     int amountOfShip = Integer.parseInt(field);
 

@@ -16,7 +16,7 @@ public class FreeShip extends Ship {
 
     @Override
     public void createShape() {
-        Iterator<Coordinate> pointIterator = shape.iterator();
+        Iterator<Coordinate> pointIterator = shape.getShapeIterator();
         while (pointIterator.hasNext()) {
             Coordinate point = pointIterator.next();
 
@@ -26,6 +26,8 @@ public class FreeShip extends Ship {
              */
             addShapePoint(getPositionX() + point.getX(), getPositionY() + point.getY());
         }
+        calcHealPoint();
+        calcArea();
     }
 
 }

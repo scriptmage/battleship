@@ -20,7 +20,7 @@ public class Shape implements Comparable<Shape> {
         return coordinateSet;
     }
 
-    public Iterator<Coordinate> iterator() {
+    public Iterator<Coordinate> getShapeIterator() {
         return points.iterator();
     }
 
@@ -32,7 +32,7 @@ public class Shape implements Comparable<Shape> {
         return points.size();
     }
 
-    public boolean add(int posX, int posY) {
+    public boolean addShapePoint(int posX, int posY) {
         return points.add(posX, posY);
     }
 
