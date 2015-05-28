@@ -10,7 +10,6 @@ import com.epam.battleship.hunters.HunterFactory;
 import com.epam.battleship.targets.Shape;
 import com.epam.battleship.targets.ShipManager;
 
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class BattleField extends Board {
