@@ -1,17 +1,9 @@
 package com.epam.battleship.network;
 
-public class ConnectionData {
-
-    public static final int DEFAULT_PORT_NUMBER = 3235;
-    public static final int MINIMUM_PORT_NUMBER = 1024;
-    public static final int MAXIMUM_PORT_NUMBER = 65535;
+public final class ConnectionData {
 
     private String          hostName;
     private int             portNumber;
-
-    public ConnectionData() {
-        setPortNumber(DEFAULT_PORT_NUMBER);
-    }
 
     public ConnectionData(int portNumber) {
         setPortNumber(portNumber);
@@ -39,7 +31,6 @@ public class ConnectionData {
     }
 
     public void setPortNumber(int portNumber) {
-        validatePortNumber(portNumber);
         this.portNumber = portNumber;
     }
 
@@ -50,21 +41,6 @@ public class ConnectionData {
             throw new IllegalArgumentException("This isn't a number: " + portNumber
                     + ". Please, give me a number.", e);
         }
-    }
-
-    private void validatePortNumber(int portNumber) {
-        if (!isValidPortNumber(portNumber)) {
-            throw new IllegalArgumentException("Port number should be between "
-                    + MINIMUM_PORT_NUMBER + " and " + MAXIMUM_PORT_NUMBER);
-        }
-    }
-
-    private boolean isValidPortNumber(int portNumber) {
-        return portNumber > MINIMUM_PORT_NUMBER && portNumber < MAXIMUM_PORT_NUMBER;
-    }
-
-    public boolean isServerConnection() {
-        return hostName == null || hostName.isEmpty();
     }
 
 }

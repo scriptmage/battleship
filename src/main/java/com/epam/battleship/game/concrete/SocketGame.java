@@ -1,36 +1,35 @@
 package com.epam.battleship.game.concrete;
 
+import java.io.IOException;
+
 import com.epam.battleship.Startable;
 import com.epam.battleship.battlefield.BattleField;
 import com.epam.battleship.battlefield.BattleFieldFactory;
-import com.epam.battleship.network.ConnectionData;
 import com.epam.battleship.network.connection.sockets.SocketTalker;
 import com.epam.battleship.network.protocol.Command;
+import com.epam.battleship.network.protocol.CommandFactory;
 import com.epam.battleship.network.protocol.ProtocolBuilder;
 import com.epam.battleship.network.protocol.commands.CommandQueue;
 import com.epam.battleship.network.protocol.commands.concrete.HelloCommand;
 
-import java.io.IOException;
-
 public class SocketGame implements Startable {
 
-    private ConnectionData connectionData;
+    private SocketTalker socketTalker;
 
-    public void setConnection(ConnectionData connectionData) {
-        this.connectionData = connectionData;
+    public SocketGame(SocketTalker socketTalker) {
+    	this.socketTalker = socketTalker;
     }
 
     @Override
     public void start() {
-        SocketTalker socketTalker = new SocketTalker(connectionData);
-        Command protocol = ProtocolBuilder.getProtocol();
+        Command protocol = ProtocolBuilder.getProtocolChain();
 
         try {
             socketTalker.open();
             socketTalker.createIoStreams();
 
-            if (connectionData.isServerConnection()) {
-                beginServerGame(socketTalker);
+            if (socketTalker.isServerConnection()) {
+                beginServerGame();
             }
 
             boolean hasRunning = true;
@@ -49,10 +48,10 @@ public class SocketGame implements Startable {
         }
     }
 
-    private void beginServerGame(SocketTalker socketTalker) {
+    private void beginServerGame() {
         BattleField battleField = BattleFieldFactory.getBattleField();
         battleField.createBattleField();
-        HelloCommand helloCommand = new HelloCommand();
+        HelloCommand helloCommand = CommandFactory.createHelloCommand();
         socketTalker.send(helloCommand);
     }
 

@@ -10,9 +10,15 @@ public class SocketTalker extends Connection {
     private SocketWriter writer;
 
     public SocketTalker(ConnectionData connectionData) {
-        super(connectionData);
-        reader = new SocketReader();
-        writer = new SocketWriter();
+    	super(connectionData);
+    }
+    
+    public void setSocketReader(SocketReader reader) {
+    	this.reader = reader;
+    }
+    
+    public void setSocketWriter(SocketWriter writer) {
+    	this.writer = writer;
     }
 
     public void createIoStreams() {
