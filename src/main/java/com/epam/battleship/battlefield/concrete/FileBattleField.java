@@ -39,10 +39,12 @@ public class FileBattleField extends BattleField {
         }
     }
 
-    private void putNewShip(List<Shape> ships, int index) {
+    private void putNewShip(List<Shape> shapes, int index) {
         int counter = 0;
         do {
-            if (addShip(getShip(ships.get(index)))) {
+            Shape shape = shapes.get(index);
+			Ship ship = getShip(shape);
+			if (addShip(ship)) {
                 dimensionSplitter.next();
                 counter++;
             }
@@ -96,8 +98,7 @@ public class FileBattleField extends BattleField {
     private String load() throws IOException {
         StringBuilder fileContent = new StringBuilder();
         Resolver resolver = GameConfig.getResolver();
-        ClassLoader classLoader = getClass().getClassLoader();
-        File dataOfShips = new File(classLoader.getResource(resolver.get("dataFile")).getFile());
+        File dataOfShips = new File(resolver.get("dataFile"));
         try (BufferedReader br = new BufferedReader(new FileReader(dataOfShips))) {
             String buffer = null;
             while ((buffer = br.readLine()) != null) {
