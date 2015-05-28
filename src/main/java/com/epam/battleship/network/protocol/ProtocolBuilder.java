@@ -2,7 +2,7 @@ package com.epam.battleship.network.protocol;
 
 public class ProtocolBuilder {
 
-	public static Command getProtocolChain() {
+	public static Command createProtocolChain() {
 		final Command error = CommandFactory.createErrorCommand();
         final Command win = CommandFactory.createWinCommand();
         final Command hello = CommandFactory.createHelloCommand();
