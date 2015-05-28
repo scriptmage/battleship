@@ -9,6 +9,7 @@ import com.epam.battleship.game.Application;
 import com.epam.battleship.hunters.HunterFactory;
 import com.epam.battleship.hunters.concrete.ConcretePositionHunter;
 import com.epam.battleship.network.protocol.Command;
+import com.epam.battleship.network.protocol.CommandFactory;
 import com.epam.battleship.network.protocol.commands.CommandQueue;
 
 public class FireCommand extends Command {
@@ -17,7 +18,6 @@ public class FireCommand extends Command {
 
     private Coordinate             coordinate;
     private BattleField            battleField;
-    private ConcretePositionHunter shooter      = HunterFactory.getShooter();
 
     public FireCommand() {
 
@@ -33,7 +33,8 @@ public class FireCommand extends Command {
         if (!isCommand(COMMAND_NAME)) {
             return successor.getResponse(input);
         }
-
+        
+        ConcretePositionHunter shooter = HunterFactory.getShooter();
         shooter.setPosition(getParams());
         battleField = BattleFieldFactory.getBattleField();
         Hunter hunter = HunterFactory.getHunter();
@@ -41,23 +42,23 @@ public class FireCommand extends Command {
         if (battleField.shoot(shooter)) {
 
             if (battleField.isAliveShips()) {
-                Command command = new HitCommand();
+                Command command = CommandFactory.createHitCommand();
                 Ship ship = battleField.getShip(shooter.getPosition());
 
                 if (!ship.isAlive()) {
-                    command = new SunkCommand();
+                    command = CommandFactory.createSunkCommand();
                 }
 
                 addResponse(command);
-                addResponse(new FireCommand(hunter.nextShot()));
+                addResponse(CommandFactory.createFireCommandWhichFireConcretePosition(hunter.nextShot()));
             } else {
-                addResponse(new WinCommand());
+                addResponse(CommandFactory.createWinCommand());
                 Application.log("I lost");
             }
 
         } else {
-            addResponse(new MissCommand());
-            addResponse(new FireCommand(hunter.nextShot()));
+            addResponse(CommandFactory.createMissCommand());
+            addResponse(CommandFactory.createFireCommandWhichFireConcretePosition(hunter.nextShot()));
         }
 
         return getResponseQueue();

@@ -1,6 +1,7 @@
 package com.epam.battleship.network.protocol.commands.concrete;
 
 import com.epam.battleship.network.protocol.Command;
+import com.epam.battleship.network.protocol.CommandFactory;
 import com.epam.battleship.network.protocol.commands.CommandQueue;
 
 public class QuitCommand extends Command {
@@ -16,9 +17,9 @@ public class QuitCommand extends Command {
     public CommandQueue getResponse(String input) {
         initCommand(input);
         if (!isCommand(COMMAND_NAME)) {
-            addResponse(new ErrorCommand("Unknown protocol"));
+            addResponse(CommandFactory.createErrorCommandWithMessage("Unknown protocol"));
         }
-        addResponse(new QuitCommand());
+        addResponse(CommandFactory.createQuitCommand());
         return getResponseQueue();
     }
 

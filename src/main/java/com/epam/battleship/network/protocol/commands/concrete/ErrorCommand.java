@@ -1,6 +1,7 @@
 package com.epam.battleship.network.protocol.commands.concrete;
 
 import com.epam.battleship.network.protocol.Command;
+import com.epam.battleship.network.protocol.CommandFactory;
 import com.epam.battleship.network.protocol.commands.CommandQueue;
 
 public class ErrorCommand extends Command {
@@ -22,7 +23,7 @@ public class ErrorCommand extends Command {
         if (!isCommand(COMMAND_NAME)) {
             return successor.getResponse(input);
         }
-        addResponse(new QuitCommand());
+        addResponse(CommandFactory.createQuitCommand());
         return getResponseQueue();
     }
 

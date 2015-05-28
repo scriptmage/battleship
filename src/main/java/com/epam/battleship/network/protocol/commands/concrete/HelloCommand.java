@@ -7,6 +7,7 @@ import com.epam.battleship.components.Dimension;
 import com.epam.battleship.game.GameConfig;
 import com.epam.battleship.hunters.HunterFactory;
 import com.epam.battleship.network.protocol.Command;
+import com.epam.battleship.network.protocol.CommandFactory;
 import com.epam.battleship.network.protocol.commands.CommandQueue;
 
 public class HelloCommand extends Command {
@@ -31,7 +32,7 @@ public class HelloCommand extends Command {
         battleField.createBattleField();
 
         Hunter hunter = HunterFactory.getHunter();
-        addResponse(new FireCommand(hunter.nextShot()));
+        addResponse(CommandFactory.createFireCommandWhichFireConcretePosition(hunter.nextShot()));
         return getResponseQueue();
     }
 
