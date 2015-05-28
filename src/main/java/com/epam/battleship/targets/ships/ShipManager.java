@@ -7,7 +7,7 @@ import com.epam.battleship.components.Dimension;
 import com.epam.battleship.exceptions.InvalidShipPositionException;
 import com.epam.battleship.game.Application;
 import com.epam.battleship.game.GameConfig;
-import com.epam.battleship.targets.ships.concrete.NullShip;
+import com.epam.battleship.targets.ShipFactory;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -97,7 +97,7 @@ public class ShipManager {
     }
 
     public Ship get(Coordinate coordinate) {
-        Ship result = new NullShip();
+        Ship result = ShipFactory.createNullShip();
 
         Iterator<Ship> iterator = ships.iterator();
         while (iterator.hasNext()) {

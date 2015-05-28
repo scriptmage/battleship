@@ -1,7 +1,5 @@
 package com.epam.battleship.targets;
 
-import java.util.Random;
-
 import com.epam.battleship.Ship;
 import com.epam.battleship.components.Coordinate;
 import com.epam.battleship.components.Dimension;
@@ -10,7 +8,10 @@ import com.epam.battleship.game.GameConfig;
 import com.epam.battleship.targets.ships.concrete.FreeShip;
 import com.epam.battleship.targets.ships.concrete.LShip;
 import com.epam.battleship.targets.ships.concrete.LineShip;
+import com.epam.battleship.targets.ships.concrete.NullShip;
 import com.epam.battleship.targets.ships.concrete.TShip;
+
+import java.util.Random;
 
 public class ShipFactory {
 
@@ -41,6 +42,10 @@ public class ShipFactory {
 
     public static Ship getFreeShip(Shape shape) {
         return new FreeShip(shape);
+    }
+
+    public static Ship createNullShip() {
+        return new NullShip();
     }
 
 }
