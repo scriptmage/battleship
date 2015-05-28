@@ -1,7 +1,7 @@
 package com.epam.battleship.network.protocol;
 
 import com.epam.battleship.components.Coordinate;
-import com.epam.battleship.network.protocol.commands.NullCommand;
+import com.epam.battleship.network.protocol.commands.concrete.EmptyCommand;
 import com.epam.battleship.network.protocol.commands.concrete.ErrorCommand;
 import com.epam.battleship.network.protocol.commands.concrete.FireCommand;
 import com.epam.battleship.network.protocol.commands.concrete.HelloCommand;
@@ -53,8 +53,8 @@ public class CommandFactory {
 		return new QuitCommand();
 	}
 	
-	public static NullCommand createNullCommand() {
-		return new NullCommand();
+	public static EmptyCommand createNullCommand() {
+		return new EmptyCommand();
 	}
 	
 }
