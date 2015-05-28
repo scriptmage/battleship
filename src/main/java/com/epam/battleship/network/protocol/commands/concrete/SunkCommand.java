@@ -11,13 +11,14 @@ public class SunkCommand extends Command {
 
     @Override
     public CommandQueue getResponse(String input) {
+        CommandQueue commandQueue = getSuccessor().getResponse(input);
         initCommand(input);
-        if (!isCommand(COMMAND_NAME)) {
-            return successor.getResponse(input);
+        if (isCommand(COMMAND_NAME)) {
+            Hunter hunter = HunterFactory.getHunter();
+            hunter.clear();
+            commandQueue = getResponseQueue();
         }
-        Hunter hunter = HunterFactory.getHunter();
-        hunter.clear();
-        return getResponseQueue();
+        return commandQueue;
     }
 
     @Override

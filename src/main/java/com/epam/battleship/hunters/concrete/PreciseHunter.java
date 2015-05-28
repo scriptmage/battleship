@@ -25,8 +25,8 @@ public class PreciseHunter extends Hunter {
     public Coordinate nextShot() {
         Coordinate coordinate;
         do {
-            coordinate = convertToGridPosition(Utils.getRandomCoordinate(dimension.getWidth(),
-                    dimension.getHeight()));
+            coordinate = convertToGridPosition(Utils.getRandomCoordinate(getDimension().getWidth(),
+                    getDimension().getHeight()));
             if (!targetPoints.isEmpty()) {
                 coordinate = targetPoints.pop();
             }

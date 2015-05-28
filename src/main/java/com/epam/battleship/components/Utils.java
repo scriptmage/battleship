@@ -18,5 +18,5 @@ public class Utils {
         int positionY = random.nextInt(maxYPosition - minYPosition) + minYPosition;
         return new Coordinate(positionX, positionY);
     }
-    
+
 }

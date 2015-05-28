@@ -5,14 +5,14 @@ import com.epam.battleship.network.protocol.commands.CommandQueue;
 
 public class EmptyCommand extends Command {
 
-	@Override
-	public CommandQueue getResponse(String input) {
-		return new CommandQueue();
-	}
+    @Override
+    public CommandQueue getResponse(String input) {
+        return new CommandQueue();
+    }
 
-	@Override
-	public String toString() {
-		return "";
-	}
+    @Override
+    public String toString() {
+        return "";
+    }
 
 }

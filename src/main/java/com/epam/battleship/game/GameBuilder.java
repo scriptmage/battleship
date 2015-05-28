@@ -7,7 +7,10 @@ import com.epam.battleship.network.connection.sockets.SocketTalker;
 import com.epam.battleship.network.connection.sockets.SocketWriter;
 import com.epam.battleship.resolvers.Resolver;
 
-public class GameBuilder {
+public final class GameBuilder {
+
+    private GameBuilder() {
+    }
 
     public static Startable createGame() {
         Resolver resolver = GameConfig.getResolver();
@@ -19,10 +22,11 @@ public class GameBuilder {
             SocketTalker socketTalker = new SocketTalker(GameConfig.getConnectionData());
             socketTalker.setSocketReader(new SocketReader());
             socketTalker.setSocketWriter(new SocketWriter());
-			game = new SocketGame(socketTalker);
+            game = new SocketGame(socketTalker);
             break;
         default:
-            throw new IllegalArgumentException("Unknown game mode: " + gameMode + "! Use the following: local, socket");
+            throw new IllegalArgumentException("Unknown game mode: " + gameMode
+                    + "! Use the following: local, socket");
         }
         return game;
     }

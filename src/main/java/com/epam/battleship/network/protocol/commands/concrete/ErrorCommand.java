@@ -19,12 +19,13 @@ public class ErrorCommand extends Command {
 
     @Override
     public CommandQueue getResponse(String input) {
+        CommandQueue commandQueue = getSuccessor().getResponse(input);
         initCommand(input);
-        if (!isCommand(COMMAND_NAME)) {
-            return successor.getResponse(input);
+        if (isCommand(COMMAND_NAME)) {
+            addResponse(CommandFactory.createQuitCommand());
+            commandQueue = getResponseQueue();
         }
-        addResponse(CommandFactory.createQuitCommand());
-        return getResponseQueue();
+        return commandQueue;
     }
 
     @Override

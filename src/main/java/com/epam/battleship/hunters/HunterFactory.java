@@ -8,10 +8,13 @@ import com.epam.battleship.hunters.concrete.PreciseHunter;
 import com.epam.battleship.hunters.concrete.RandomHunter;
 import com.epam.battleship.resolvers.Resolver;
 
-public class HunterFactory {
+public final class HunterFactory {
 
     private static Hunter                 hunter;
     private static ConcretePositionHunter shooter;
+
+    private HunterFactory() {
+    }
 
     public static Hunter getHunter() {
         if (hunter == null) {

@@ -45,7 +45,7 @@ public abstract class BattleField extends Board {
         validatePosition(shoot);
         return isHit(shoot);
     }
-    
+
     private boolean isHit(Coordinate shoot) {
         Ship ship = shipManager.get(shoot);
         boolean isHit = ship.isAlive();
@@ -75,7 +75,7 @@ public abstract class BattleField extends Board {
     public boolean isAliveShips() {
         return shipManager.isAliveShips();
     }
-    
+
     public void shortByShipSize(List<Shape> ships) {
         shipManager.shortByShipSize(ships);
     }

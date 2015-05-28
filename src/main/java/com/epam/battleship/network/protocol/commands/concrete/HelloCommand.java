@@ -18,22 +18,23 @@ public class HelloCommand extends Command {
 
     @Override
     public CommandQueue getResponse(String input) {
+        CommandQueue commandQueue = getSuccessor().getResponse(input);
         initCommand(input);
-        if (!isCommand(COMMAND_NAME)) {
-            return successor.getResponse(input);
+        if (isCommand(COMMAND_NAME)) {
+            Object[] sizeOfBattlefield = getParams();
+            Dimension dimensionOfBattleField = new Dimension(
+                    Integer.parseInt((String) sizeOfBattlefield[WIDTH]),
+                    Integer.parseInt((String) sizeOfBattlefield[HEIGHT]));
+            GameConfig.setBattlefieldDimension(dimensionOfBattleField);
+            BattleField battleField = BattleFieldFactory.getBattleField();
+            battleField.createBattleField();
+
+            Hunter hunter = HunterFactory.getHunter();
+            addResponse(CommandFactory
+                    .createFireCommandWhichFireConcretePosition(hunter.nextShot()));
+            commandQueue = getResponseQueue();
         }
-
-        Object[] sizeOfBattlefield = getParams();
-        Dimension dimensionOfBattleField = new Dimension(
-                Integer.parseInt((String) sizeOfBattlefield[WIDTH]),
-                Integer.parseInt((String) sizeOfBattlefield[HEIGHT]));
-        GameConfig.setBattlefieldDimension(dimensionOfBattleField);
-        BattleField battleField = BattleFieldFactory.getBattleField();
-        battleField.createBattleField();
-
-        Hunter hunter = HunterFactory.getHunter();
-        addResponse(CommandFactory.createFireCommandWhichFireConcretePosition(hunter.nextShot()));
-        return getResponseQueue();
+        return commandQueue;
     }
 
     @Override

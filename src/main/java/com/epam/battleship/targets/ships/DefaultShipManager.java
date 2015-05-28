@@ -135,7 +135,7 @@ public class DefaultShipManager implements ShipManager {
         }
         return hasAlive;
     }
-    
+
     @Override
     public void shortByShipSize(List<Shape> ships) {
         Shape[] unsortedShips = new Shape[ships.size()];

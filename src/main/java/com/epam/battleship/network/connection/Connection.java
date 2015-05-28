@@ -9,16 +9,20 @@ import com.epam.battleship.network.ConnectionData;
 
 public class Connection {
 
-    protected Socket       client;
+    private Socket         client;
     private ServerSocket   serverSocket;
     private ConnectionData connectionData;
 
     public Connection(ConnectionData connectionData) {
-    	this.connectionData = connectionData;
+        this.connectionData = connectionData;
     }
-    
+
     public ConnectionData getConnectionData() {
-    	return new ConnectionData(connectionData.getHostName(), connectionData.getPortNumber());
+        return new ConnectionData(connectionData.getHostName(), connectionData.getPortNumber());
+    }
+
+    public Socket getClient() {
+        return client;
     }
 
     public boolean isConnected() {
@@ -47,9 +51,9 @@ public class Connection {
             throw new RuntimeException(e);
         }
     }
-    
-    public boolean isServerConnection() { 
-    	return connectionData.getHostName() == null || connectionData.getHostName().isEmpty();
+
+    public boolean isServerConnection() {
+        return connectionData.getHostName() == null || connectionData.getHostName().isEmpty();
     }
 
 }

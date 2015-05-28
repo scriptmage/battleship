@@ -1,6 +1,5 @@
 package com.epam.battleship.exceptions;
 
-@SuppressWarnings("serial")
 public class InvalidShipPositionException extends RuntimeException {
 
     public InvalidShipPositionException() {

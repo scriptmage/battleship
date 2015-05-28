@@ -1,9 +1,12 @@
 package com.epam.battleship.network.protocol;
 
-public class ProtocolBuilder {
+public final class ProtocolBuilder {
 
-	public static Command createProtocolChain() {
-		final Command error = CommandFactory.createErrorCommand();
+    private ProtocolBuilder() {
+    }
+
+    public static Command createProtocolChain() {
+        final Command error = CommandFactory.createErrorCommand();
         final Command win = CommandFactory.createWinCommand();
         final Command hello = CommandFactory.createHelloCommand();
         final Command fire = CommandFactory.createFireCommand();
@@ -11,7 +14,7 @@ public class ProtocolBuilder {
         final Command miss = CommandFactory.createMissCommand();
         final Command sunk = CommandFactory.createSunkCommand();
         final Command quit = CommandFactory.createQuitCommand();
-        
+
         error.setSuccessor(win);
         win.setSuccessor(hello);
         hello.setSuccessor(fire);
@@ -19,7 +22,7 @@ public class ProtocolBuilder {
         hit.setSuccessor(miss);
         miss.setSuccessor(sunk);
         sunk.setSuccessor(quit);
-        
+
         return error;
     }
 

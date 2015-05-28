@@ -10,20 +10,20 @@ public class SocketTalker extends Connection {
     private SocketWriter writer;
 
     public SocketTalker(ConnectionData connectionData) {
-    	super(connectionData);
+        super(connectionData);
     }
-    
+
     public void setSocketReader(SocketReader reader) {
-    	this.reader = reader;
+        this.reader = reader;
     }
-    
+
     public void setSocketWriter(SocketWriter writer) {
-    	this.writer = writer;
+        this.writer = writer;
     }
 
     public void createIoStreams() {
-        reader.createStream(client);
-        writer.createStream(client);
+        reader.createStream(getClient());
+        writer.createStream(getClient());
     }
 
     public String read() {

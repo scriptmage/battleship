@@ -11,8 +11,8 @@ public class RandomHunter extends Hunter {
         Coordinate coordinate;
 
         do {
-            int width = dimension.getWidth();
-            int height = dimension.getHeight();
+            int width = getDimension().getWidth();
+            int height = getDimension().getHeight();
             coordinate = Utils.getRandomCoordinate(width, height);
         } while (isExists(coordinate));
 

@@ -14,10 +14,10 @@ import com.epam.battleship.network.protocol.commands.CommandQueue;
 
 public class FireCommand extends Command {
 
-    private static final String    COMMAND_NAME = "FIRE";
+    private static final String COMMAND_NAME = "FIRE";
 
-    private Coordinate             coordinate;
-    private BattleField            battleField;
+    private Coordinate          coordinate;
+    private BattleField         battleField;
 
     public FireCommand() {
 
@@ -29,39 +29,40 @@ public class FireCommand extends Command {
 
     @Override
     public CommandQueue getResponse(String input) {
+        CommandQueue commandQueue = getSuccessor().getResponse(input);
         initCommand(input);
-        if (!isCommand(COMMAND_NAME)) {
-            return successor.getResponse(input);
-        }
-        
-        ConcretePositionHunter shooter = HunterFactory.getShooter();
-        shooter.setPosition(getParams());
-        battleField = BattleFieldFactory.getBattleField();
-        Hunter hunter = HunterFactory.getHunter();
+        if (isCommand(COMMAND_NAME)) {
+            ConcretePositionHunter shooter = HunterFactory.getShooter();
+            shooter.setPosition(getParams());
+            battleField = BattleFieldFactory.getBattleField();
+            Hunter hunter = HunterFactory.getHunter();
 
-        if (battleField.shoot(shooter)) {
+            if (battleField.shoot(shooter)) {
 
-            if (battleField.isAliveShips()) {
-                Command command = CommandFactory.createHitCommand();
-                Ship ship = battleField.getShip(shooter.getPosition());
+                if (battleField.isAliveShips()) {
+                    Command command = CommandFactory.createHitCommand();
+                    Ship ship = battleField.getShip(shooter.getPosition());
 
-                if (!ship.isAlive()) {
-                    command = CommandFactory.createSunkCommand();
+                    if (!ship.isAlive()) {
+                        command = CommandFactory.createSunkCommand();
+                    }
+
+                    addResponse(command);
+                    addResponse(CommandFactory.createFireCommandWhichFireConcretePosition(hunter
+                            .nextShot()));
+                } else {
+                    addResponse(CommandFactory.createWinCommand());
+                    Application.log("I lost");
                 }
 
-                addResponse(command);
-                addResponse(CommandFactory.createFireCommandWhichFireConcretePosition(hunter.nextShot()));
             } else {
-                addResponse(CommandFactory.createWinCommand());
-                Application.log("I lost");
+                addResponse(CommandFactory.createMissCommand());
+                addResponse(CommandFactory.createFireCommandWhichFireConcretePosition(hunter
+                        .nextShot()));
             }
-
-        } else {
-            addResponse(CommandFactory.createMissCommand());
-            addResponse(CommandFactory.createFireCommandWhichFireConcretePosition(hunter.nextShot()));
+            commandQueue = getResponseQueue();
         }
-
-        return getResponseQueue();
+        return commandQueue;
     }
 
     @Override

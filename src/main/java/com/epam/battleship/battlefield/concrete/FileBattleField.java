@@ -42,8 +42,8 @@ public class FileBattleField extends BattleField {
     private void putNewShip(Shape shape, int numberOfShips) {
         int counter = 0;
         do {
-			Ship ship = getShip(shape);
-			if (addShip(ship)) {
+            Ship ship = getShip(shape);
+            if (addShip(ship)) {
                 dimensionSplitter.next();
                 counter++;
             }
@@ -59,7 +59,7 @@ public class FileBattleField extends BattleField {
 
     private List<Shape> parse() throws IOException {
         String fileContent = load();
-        StringTokenizer st = new StringTokenizer(fileContent, "\n");
+        StringTokenizer st = new StringTokenizer(fileContent);
         List<Shape> ships = new ArrayList<>();
 
         int dimensionY = 0;
@@ -67,13 +67,13 @@ public class FileBattleField extends BattleField {
 
         Shape pointsOfShape = new Shape();
         while (st.hasMoreTokens()) {
-            String line = st.nextToken();
-            StringTokenizer valueOfFields = new StringTokenizer(line, " ");
+            String line = st.nextToken("\n");
+            StringTokenizer valueOfFields = new StringTokenizer(line);
 
             int dimensionX = 0;
             while (valueOfFields.hasMoreTokens()) {
                 String field = valueOfFields.nextToken();
-                if (field.equals("x")) {
+                if ("x".equals(field)) {
                     pointsOfShape.addShapePoint(dimensionX, dimensionY);
                 } else if (field.matches("^\\d+$")) {
                     int amountOfShip = Integer.parseInt(field);
@@ -97,7 +97,8 @@ public class FileBattleField extends BattleField {
     private String load() throws IOException {
         StringBuilder fileContent = new StringBuilder();
         Resolver resolver = GameConfig.getResolver();
-        try (BufferedReader br = new BufferedReader(new FileReader(new File(resolver.get("dataFile"))))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(
+                resolver.get("dataFile"))))) {
             String buffer = null;
             while ((buffer = br.readLine()) != null) {
                 fileContent.append(buffer);

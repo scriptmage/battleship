@@ -5,9 +5,12 @@ import com.epam.battleship.battlefield.drawers.BattleFieldDrawer;
 import com.epam.battleship.game.GameConfig;
 import com.epam.battleship.resolvers.Resolver;
 
-public class BattleFieldDrawerFactory {
+public final class BattleFieldDrawerFactory {
 
     private static Drawable drawer;
+
+    private BattleFieldDrawerFactory() {
+    }
 
     public static Drawable getDrawer() {
         Resolver resolver = GameConfig.getResolver();

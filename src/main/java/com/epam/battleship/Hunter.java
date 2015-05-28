@@ -5,7 +5,7 @@ import com.epam.battleship.components.CoordinateSet;
 import com.epam.battleship.components.Dimension;
 
 public abstract class Hunter implements Shooter {
-    protected Dimension   dimension;
+    private Dimension     dimension;
     private CoordinateSet shots;
     private Coordinate    lastShot;
 
@@ -19,6 +19,10 @@ public abstract class Hunter implements Shooter {
 
     public void setDimension(int widthOfBattleField, int heightOfBattleField) {
         this.dimension = new Dimension(widthOfBattleField, heightOfBattleField);
+    }
+
+    public Dimension getDimension() {
+        return dimension;
     }
 
     public void addShot(int posX, int posY) {

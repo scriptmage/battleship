@@ -6,10 +6,13 @@ import com.epam.battleship.game.GameConfig;
 import com.epam.battleship.resolvers.Resolver;
 import com.epam.battleship.targets.ships.DefaultShipManager;
 
-public class BattleFieldFactory {
+public final class BattleFieldFactory {
 
-    private static final int NUMBER_OF_BLOCKS = 16;
+    private static final int   NUMBER_OF_BLOCKS = 16;
     private static BattleField battleField;
+
+    private BattleFieldFactory() {
+    }
 
     public static BattleField getBattleField() {
         Resolver resolver = GameConfig.getResolver();

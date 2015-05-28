@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 public abstract class Command {
 
-    protected Command    successor;
+    private Command      successor;
     private String       command;
     private List<String> params        = new ArrayList<>();
     private CommandQueue responseQueue = new CommandQueue();
@@ -16,7 +16,7 @@ public abstract class Command {
     private boolean      hasSendable   = true;
 
     public void initCommand(String input) {
-        StringTokenizer st = new StringTokenizer(input, " ");
+        StringTokenizer st = new StringTokenizer(input);
 
         if (st.hasMoreTokens()) {
             command = st.nextToken();
@@ -56,6 +56,10 @@ public abstract class Command {
 
     public void setSuccessor(Command successor) {
         this.successor = successor;
+    }
+
+    public Command getSuccessor() {
+        return successor;
     }
 
     public boolean isRunnable() {

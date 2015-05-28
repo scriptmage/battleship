@@ -12,19 +12,20 @@ public class HitCommand extends Command {
 
     @Override
     public CommandQueue getResponse(String input) {
+        CommandQueue commandQueue = getSuccessor().getResponse(input);
         initCommand(input);
-        if (!isCommand(COMMAND_NAME)) {
-            return successor.getResponse(input);
+        if (isCommand(COMMAND_NAME)) {
+            Hunter hunter = HunterFactory.getHunter();
+            Coordinate lastShot = hunter.getLastShot();
+            if (lastShot != null) {
+                hunter.setPosition(new Coordinate(lastShot.getX() + 1, lastShot.getY()));
+                hunter.setPosition(new Coordinate(lastShot.getX() - 1, lastShot.getY()));
+                hunter.setPosition(new Coordinate(lastShot.getX(), lastShot.getY() + 1));
+                hunter.setPosition(new Coordinate(lastShot.getX(), lastShot.getY() - 1));
+            }
+            commandQueue = getResponseQueue();
         }
-        Hunter hunter = HunterFactory.getHunter();
-        Coordinate lastShot = hunter.getLastShot();
-        if (lastShot != null) {
-            hunter.setPosition(new Coordinate(lastShot.getX() + 1, lastShot.getY()));
-            hunter.setPosition(new Coordinate(lastShot.getX() - 1, lastShot.getY()));
-            hunter.setPosition(new Coordinate(lastShot.getX(), lastShot.getY() + 1));
-            hunter.setPosition(new Coordinate(lastShot.getX(), lastShot.getY() - 1));
-        }
-        return getResponseQueue();
+        return commandQueue;
     }
 
     @Override
