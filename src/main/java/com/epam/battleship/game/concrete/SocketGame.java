@@ -15,32 +15,36 @@ import com.epam.battleship.network.protocol.commands.concrete.HelloCommand;
 public class SocketGame implements Startable {
 
 	private SocketTalker socketTalker;
+	private Command protocol;
 
 	public SocketGame(SocketTalker socketTalker) {
 		this.socketTalker = socketTalker;
+		protocol = ProtocolBuilder.createProtocolChain();
 	}
 
 	@Override
 	public void start() {
-		Command protocol = ProtocolBuilder.createProtocolChain();
-
 		initConnection();
-
 		if (socketTalker.isServerConnection()) {
 			beginServerGame();
 		}
-
-		boolean hasRunning = true;
-		while (socketTalker.isConnected() && hasRunning) {
-			String input = socketTalker.read();
-			CommandQueue response = protocol.getResponse(input);
-
-			socketTalker.send(response);
-			hasRunning = getRunnableState(response);
-		}
-
+		run();
 		socketTalker.close();
 	}
+
+    private void run() {
+        boolean hasRunning = true;
+		while (socketTalker.isConnected() && hasRunning) {
+			CommandQueue response = getResponse();
+			hasRunning = getRunnableState(response);
+			socketTalker.send(response);
+		}
+    }
+
+    private CommandQueue getResponse() {
+        String input = socketTalker.read();
+        return protocol.getResponse(input);
+    }
 
 	private void initConnection() {
 		try {
