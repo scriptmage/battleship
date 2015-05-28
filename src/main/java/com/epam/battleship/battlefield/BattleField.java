@@ -44,16 +44,17 @@ public abstract class BattleField extends Board {
     public boolean shoot(Hunter hunter) {
         Coordinate shoot = hunter.nextShot();
         validatePosition(shoot);
-
+        return isHit(shoot);
+    }
+    
+    private boolean isHit(Coordinate shoot) {
         Ship ship = shipManager.get(shoot);
-        boolean hasHit = ship.isAlive();
-
-        if (hasHit) {
+        boolean isHit = ship.isAlive();
+        if (isHit) {
             ship.decHealPoint();
             draw(shoot);
         }
-
-        return hasHit;
+        return isHit;
     }
 
     private void draw(Coordinate shoot) {
@@ -75,17 +76,9 @@ public abstract class BattleField extends Board {
     public boolean isAliveShips() {
         return shipManager.isAliveShips();
     }
-
-    protected void shortByShipSize(List<Shape> ships) {
-        Shape[] unsortedShips = new Shape[ships.size()];
-        for (int i = 0; i < ships.size(); i++) {
-            unsortedShips[i] = ships.get(i);
-        }
-        Arrays.sort(unsortedShips);
-        ships.clear();
-        for (Shape shapeOfShip : unsortedShips) {
-            ships.add(shapeOfShip);
-        }
+    
+    public void shortByShipSize(List<Shape> ships) {
+        shipManager.shortByShipSize(ships);
     }
 
     public abstract void createBattleField();

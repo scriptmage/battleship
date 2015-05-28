@@ -7,11 +7,14 @@ import com.epam.battleship.components.Dimension;
 import com.epam.battleship.exceptions.InvalidShipPositionException;
 import com.epam.battleship.game.Application;
 import com.epam.battleship.game.GameConfig;
+import com.epam.battleship.targets.Shape;
 import com.epam.battleship.targets.ShipFactory;
 import com.epam.battleship.targets.ShipManager;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 public class DefaultShipManager implements ShipManager {
@@ -131,6 +134,19 @@ public class DefaultShipManager implements ShipManager {
             hasAlive = ship.isAlive();
         }
         return hasAlive;
+    }
+    
+    @Override
+    public void shortByShipSize(List<Shape> ships) {
+        Shape[] unsortedShips = new Shape[ships.size()];
+        for (int i = 0; i < ships.size(); i++) {
+            unsortedShips[i] = ships.get(i);
+        }
+        Arrays.sort(unsortedShips);
+        ships.clear();
+        for (Shape shapeOfShip : unsortedShips) {
+            ships.add(shapeOfShip);
+        }
     }
 
 }
