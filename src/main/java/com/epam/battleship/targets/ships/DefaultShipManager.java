@@ -8,16 +8,18 @@ import com.epam.battleship.exceptions.InvalidShipPositionException;
 import com.epam.battleship.game.Application;
 import com.epam.battleship.game.GameConfig;
 import com.epam.battleship.targets.ShipFactory;
+import com.epam.battleship.targets.ShipManager;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class ShipManager {
+public class DefaultShipManager implements ShipManager {
     // TODO ford�tott t�rol�s, a haj� pontokat t�rolom haj�val HashMapben, nem a
     // haj�kat t�rolom pontokkal --> megford�tom a viszonyt
     private Set<Ship> ships = new HashSet<>();
 
+    @Override
     public boolean add(Ship ship) {
         boolean result = true;
         try {
@@ -46,6 +48,7 @@ public class ShipManager {
         return ship.getTop() >= 0 && ship.getBottom() < dimension.getHeight();
     }
 
+    @Override
     public boolean validatePosition(Ship ship) {
         if (!isValidShipPosition(ship)) {
             throw new InvalidShipPositionException();
@@ -82,6 +85,7 @@ public class ShipManager {
         return reservedArea;
     }
 
+    @Override
     public CoordinateSet getShipCoords() {
         CoordinateSet coordinateSet = new CoordinateSet();
         Iterator<Ship> iterator = ships.iterator();
@@ -92,10 +96,12 @@ public class ShipManager {
         return coordinateSet;
     }
 
-    public int getShipNumber() {
+    @Override
+    public int getNumberOfShips() {
         return ships.size();
     }
 
+    @Override
     public Ship get(Coordinate coordinate) {
         Ship result = ShipFactory.createNullShip();
 
@@ -111,10 +117,12 @@ public class ShipManager {
         return result;
     }
 
+    @Override
     public Ship get(int posX, int posY) {
         return get(new Coordinate(posX, posY));
     }
 
+    @Override
     public boolean isAliveShips() {
         boolean hasAlive = false;
         Iterator<Ship> iterator = ships.iterator();

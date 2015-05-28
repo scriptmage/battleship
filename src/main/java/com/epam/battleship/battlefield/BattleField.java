@@ -8,21 +8,21 @@ import com.epam.battleship.components.Coordinate;
 import com.epam.battleship.game.GameConfig;
 import com.epam.battleship.hunters.HunterFactory;
 import com.epam.battleship.targets.Shape;
-import com.epam.battleship.targets.ships.ShipManager;
+import com.epam.battleship.targets.ShipManager;
 
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class BattleField extends Board {
-    private ShipManager ships;
+    private ShipManager shipManager;
     private int         maxNumberOfShips = 10;
 
-    public BattleField() {
-        ships = new ShipManager();
+    public void setShipManager(ShipManager shipManager) {
+        this.shipManager = shipManager;
     }
 
     public int getNumberOfShips() {
-        return ships.getShipNumber();
+        return shipManager.getNumberOfShips();
     }
 
     public int getMaxNumberOfShips() {
@@ -34,18 +34,18 @@ public abstract class BattleField extends Board {
     }
 
     public boolean addShip(Ship ship) {
-        return ships.add(ship);
+        return shipManager.add(ship);
     }
 
     public Ship getShip(Coordinate position) {
-        return ships.get(position);
+        return shipManager.get(position);
     }
 
     public boolean shoot(Hunter hunter) {
         Coordinate shoot = hunter.nextShot();
         validatePosition(shoot);
 
-        Ship ship = ships.get(shoot);
+        Ship ship = shipManager.get(shoot);
         boolean hasHit = ship.isAlive();
 
         if (hasHit) {
@@ -61,7 +61,7 @@ public abstract class BattleField extends Board {
         if (drawer != null) {
             Hunter shooter = HunterFactory.getShooter();
             shooter.addShot(shoot);
-            drawer.draw(ships.getShipCoords(), shooter);
+            drawer.draw(shipManager.getShipCoords(), shooter);
         }
     }
 
@@ -73,7 +73,7 @@ public abstract class BattleField extends Board {
     }
 
     public boolean isAliveShips() {
-        return ships.isAliveShips();
+        return shipManager.isAliveShips();
     }
 
     protected void shortByShipSize(List<Shape> ships) {
