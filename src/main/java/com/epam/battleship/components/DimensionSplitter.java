@@ -23,7 +23,7 @@ public class DimensionSplitter {
     }
 
     public Coordinate getPosition() {
-        return Coordinate.getRandomIntervalCoordinate(getLeftSideOfBlock(), getRightSideOfBlock(),
+        return Utils.getRandomIntervalCoordinate(getLeftSideOfBlock(), getRightSideOfBlock(),
                 getTopSideOfBlock(), getBottomSideOfBlock());
     }
 

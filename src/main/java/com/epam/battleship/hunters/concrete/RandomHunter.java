@@ -2,6 +2,7 @@ package com.epam.battleship.hunters.concrete;
 
 import com.epam.battleship.Hunter;
 import com.epam.battleship.components.Coordinate;
+import com.epam.battleship.components.Utils;
 
 public class RandomHunter extends Hunter {
 
@@ -12,7 +13,7 @@ public class RandomHunter extends Hunter {
         do {
             int width = dimension.getWidth();
             int height = dimension.getHeight();
-            coordinate = Coordinate.getRandomCoordinate(width, height);
+            coordinate = Utils.getRandomCoordinate(width, height);
         } while (isExists(coordinate));
 
         addShot(coordinate);

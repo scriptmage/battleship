@@ -5,6 +5,7 @@ import com.epam.battleship.battlefield.BattleFieldFactory;
 import com.epam.battleship.components.Coordinate;
 import com.epam.battleship.components.CoordinateSet;
 import com.epam.battleship.components.Dimension;
+import com.epam.battleship.components.Utils;
 import com.epam.battleship.game.GameConfig;
 
 public class PreciseHunter extends Hunter {
@@ -24,7 +25,7 @@ public class PreciseHunter extends Hunter {
     public Coordinate nextShot() {
         Coordinate coordinate;
         do {
-            coordinate = convertToGridPosition(Coordinate.getRandomCoordinate(dimension.getWidth(),
+            coordinate = convertToGridPosition(Utils.getRandomCoordinate(dimension.getWidth(),
                     dimension.getHeight()));
             if (!targetPoints.isEmpty()) {
                 coordinate = targetPoints.pop();
