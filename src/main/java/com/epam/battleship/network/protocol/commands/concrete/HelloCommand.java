@@ -27,7 +27,7 @@ public class HelloCommand extends Command {
         Dimension dimensionOfBattleField = new Dimension(
                 Integer.parseInt((String) sizeOfBattlefield[WIDTH]),
                 Integer.parseInt((String) sizeOfBattlefield[HEIGHT]));
-        GameConfig.setDimension(dimensionOfBattleField);
+        GameConfig.setBattlefieldDimension(dimensionOfBattleField);
         BattleField battleField = BattleFieldFactory.getBattleField();
         battleField.createBattleField();
 

@@ -1,30 +1,26 @@
 package com.epam.battleship.network.protocol;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ProtocolBuilder {
 
-    private static final int INDEX_OF_FIRST_COMMAND_IN_CHAIN = 0;
-
-	public static Command getProtocol(CommandFactory commandFactory) {
-        List<Command> orderOfCommands = new ArrayList<>();
+	public static Command getProtocolChain() {
+		final Command error = CommandFactory.createErrorCommand();
+        final Command win = CommandFactory.createWinCommand();
+        final Command hello = CommandFactory.createHelloCommand();
+        final Command fire = CommandFactory.createFireCommand();
+        final Command hit = CommandFactory.createHitCommand();
+        final Command miss = CommandFactory.createMissCommand();
+        final Command sunk = CommandFactory.createSunkCommand();
+        final Command quit = CommandFactory.createQuitCommand();
         
-        orderOfCommands.add(CommandFactory.createErrorCommand());
-        orderOfCommands.add(CommandFactory.createWinCommand());
-        orderOfCommands.add(CommandFactory.createHelloCommand());
-        orderOfCommands.add(CommandFactory.createFireCommand());
-        orderOfCommands.add(CommandFactory.createHitCommand());
-        orderOfCommands.add(CommandFactory.createMissCommand());
-        orderOfCommands.add(CommandFactory.createSunkCommand());
-        orderOfCommands.add(CommandFactory.createQuitCommand());
-
-        for (int i = 1; i < orderOfCommands.size(); i++) {
-            Command command = orderOfCommands.get(i - 1);
-            command.setSuccessor(orderOfCommands.get(i));
-        }
-
-        return orderOfCommands.get(INDEX_OF_FIRST_COMMAND_IN_CHAIN);
+        error.setSuccessor(win);
+        win.setSuccessor(hello);
+        hello.setSuccessor(fire);
+        fire.setSuccessor(hit);
+        hit.setSuccessor(miss);
+        miss.setSuccessor(sunk);
+        sunk.setSuccessor(quit);
+        
+        return error;
     }
 
 }
