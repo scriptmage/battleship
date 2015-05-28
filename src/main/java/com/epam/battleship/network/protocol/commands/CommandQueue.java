@@ -1,6 +1,7 @@
 package com.epam.battleship.network.protocol.commands;
 
 import com.epam.battleship.network.protocol.Command;
+import com.epam.battleship.network.protocol.CommandFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,7 +11,8 @@ import java.util.List;
 
 public class CommandQueue {
 
-    private List<Command> queue = new ArrayList<>();
+    private static final int INDEX_OF_FIRST_ELEMENT = 0;
+	private List<Command> queue = new ArrayList<>();
 
     public void add(Command command) {
         queue.add(command);
@@ -22,6 +24,16 @@ public class CommandQueue {
             Command command = iterator.next();
             add(command);
         }
+    }
+
+    public Command getFirstCommand() {
+    	Command result;
+    	if(size() == 0) {
+    		result = CommandFactory.createNullCommand();
+    	} else {
+    		result = queue.get(INDEX_OF_FIRST_ELEMENT);
+    	}
+        return result;
     }
 
     public Command get(int index) {

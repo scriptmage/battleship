@@ -14,54 +14,53 @@ import com.epam.battleship.network.protocol.commands.concrete.HelloCommand;
 
 public class SocketGame implements Startable {
 
-    private SocketTalker socketTalker;
+	private SocketTalker socketTalker;
 
-    public SocketGame(SocketTalker socketTalker) {
-    	this.socketTalker = socketTalker;
-    }
+	public SocketGame(SocketTalker socketTalker) {
+		this.socketTalker = socketTalker;
+	}
 
-    @Override
-    public void start() {
-        Command protocol = ProtocolBuilder.getProtocolChain();
+	@Override
+	public void start() {
+		Command protocol = ProtocolBuilder.createProtocolChain();
 
-        try {
-            socketTalker.open();
-            socketTalker.createIoStreams();
+		initConnection();
 
-            if (socketTalker.isServerConnection()) {
-                beginServerGame();
-            }
+		if (socketTalker.isServerConnection()) {
+			beginServerGame();
+		}
 
-            boolean hasRunning = true;
-            while (socketTalker.isConnected() && hasRunning) {
-                String input = socketTalker.read();
-                CommandQueue response = protocol.getResponse(input);
+		boolean hasRunning = true;
+		while (socketTalker.isConnected() && hasRunning) {
+			String input = socketTalker.read();
+			CommandQueue response = protocol.getResponse(input);
 
-                socketTalker.send(response);
-                hasRunning = getRunnableState(response);
-            }
+			socketTalker.send(response);
+			hasRunning = getRunnableState(response);
+		}
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            socketTalker.close();
-        }
-    }
+		socketTalker.close();
+	}
 
-    private void beginServerGame() {
-        BattleField battleField = BattleFieldFactory.getBattleField();
-        battleField.createBattleField();
-        HelloCommand helloCommand = CommandFactory.createHelloCommand();
-        socketTalker.send(helloCommand);
-    }
+	private void initConnection() {
+		try {
+			socketTalker.open();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		socketTalker.createIoStreams();
+	}
 
-    private boolean getRunnableState(CommandQueue response) {
-        boolean hasRunnable = true;
-        if (response.size() == 1) {
-            Command command = response.get(0);
-            hasRunnable = command.isRunnable();
-        }
-        return hasRunnable;
-    }
+	private void beginServerGame() {
+		BattleField battleField = BattleFieldFactory.getBattleField();
+		battleField.createBattleField();
+		HelloCommand helloCommand = CommandFactory.createHelloCommand();
+		socketTalker.send(helloCommand);
+	}
+
+	private boolean getRunnableState(CommandQueue response) {
+		Command command = response.getFirstCommand();
+		return command.isRunnable();
+	}
 
 }
