@@ -1,11 +1,11 @@
 package com.epam.battleship.network.connection;
 
+import com.epam.battleship.network.ConnectionData;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-import com.epam.battleship.network.ConnectionData;
 
 public class Connection {
 

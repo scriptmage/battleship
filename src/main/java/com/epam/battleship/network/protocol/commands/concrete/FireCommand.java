@@ -14,6 +14,8 @@ import com.epam.battleship.network.protocol.commands.CommandQueue;
 
 public class FireCommand extends Command {
 
+    private static final int    POSITION_Y   = 1;
+    private static final int    POSITION_X   = 0;
     private static final String COMMAND_NAME = "FIRE";
 
     private Coordinate          coordinate;
@@ -30,10 +32,9 @@ public class FireCommand extends Command {
     @Override
     public CommandQueue getResponse(String input) {
         CommandQueue commandQueue = getSuccessor().getResponse(input);
-        initCommand(input);
-        if (isCommand(COMMAND_NAME)) {
+        if (COMMAND_NAME.equals(getCommand(input))) {
             ConcretePositionHunter shooter = HunterFactory.getShooter();
-            shooter.setPosition(getParams());
+            shooter.setPosition(getParams(POSITION_X), getParams(POSITION_Y));
             battleField = BattleFieldFactory.getBattleField();
             Hunter hunter = HunterFactory.getHunter();
 

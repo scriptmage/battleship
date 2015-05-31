@@ -10,8 +10,7 @@ public class MissCommand extends Command {
     @Override
     public CommandQueue getResponse(String input) {
         CommandQueue commandQueue = getSuccessor().getResponse(input);
-        initCommand(input);
-        if (isCommand(COMMAND_NAME)) {
+        if (COMMAND_NAME.equals(getCommand(input))) {
             commandQueue = getResponseQueue();
         }
         return commandQueue;

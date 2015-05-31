@@ -2,31 +2,17 @@ package com.epam.battleship.network.protocol;
 
 import com.epam.battleship.network.protocol.commands.CommandQueue;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-
 public abstract class Command {
 
-    private Command      successor;
-    private String       command;
-    private List<String> params        = new ArrayList<>();
-    private CommandQueue responseQueue = new CommandQueue();
-    private boolean      hasRunnable   = true;
-    private boolean      hasSendable   = true;
+    private static final int INDEX_OF_COMMAND_NAME = 0;
+    private Command          successor;
+    private CommandQueue     responseQueue;
+    private boolean          hasRunnable           = true;
+    private boolean          hasSendable           = true;
+    private String[]         piecesOfInput;
 
-    public void initCommand(String input) {
-        StringTokenizer st = new StringTokenizer(input);
-
-        if (st.hasMoreTokens()) {
-            command = st.nextToken();
-
-            params.clear();
-            while (st.hasMoreTokens()) {
-                params.add(st.nextToken());
-            }
-        }
-        responseQueue.clear();
+    public void setResponseQueue(CommandQueue commandQueue) {
+        responseQueue = commandQueue;
     }
 
     public void addResponse(Command response) {
@@ -39,19 +25,21 @@ public abstract class Command {
         return commandQueue;
     }
 
-    public boolean isCommand(String commandName) {
-        if (command == null) {
-            throw new IllegalStateException("Please, first init the command");
+    public String getCommand(String input) {
+        parse(input);
+        String command = null;
+        if (piecesOfInput.length > 0) {
+            command = piecesOfInput[INDEX_OF_COMMAND_NAME];
         }
-        return command.equals(commandName);
-    }
-
-    public String getCommand() {
         return command;
     }
 
-    public Object[] getParams() {
-        return params.toArray();
+    private void parse(String input) {
+        piecesOfInput = input.split(" ");
+    }
+
+    public int getParams(int index) {
+        return Integer.parseInt(piecesOfInput[index + 1]);
     }
 
     public void setSuccessor(Command successor) {

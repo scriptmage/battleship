@@ -8,7 +8,7 @@ import com.epam.battleship.targets.ships.DefaultShipManager;
 
 public final class BattleFieldFactory {
 
-    private static final int   NUMBER_OF_BLOCKS = 16;
+    private static final int   NUMBER_OF_BLOCKS = 4;
     private static BattleField battleField;
 
     private BattleFieldFactory() {

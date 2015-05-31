@@ -13,8 +13,7 @@ public class HitCommand extends Command {
     @Override
     public CommandQueue getResponse(String input) {
         CommandQueue commandQueue = getSuccessor().getResponse(input);
-        initCommand(input);
-        if (isCommand(COMMAND_NAME)) {
+        if (COMMAND_NAME.equals(getCommand(input))) {
             Hunter hunter = HunterFactory.getHunter();
             Coordinate lastShot = hunter.getLastShot();
             if (lastShot != null) {

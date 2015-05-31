@@ -17,8 +17,7 @@ public class WinCommand extends Command {
     @Override
     public CommandQueue getResponse(String input) {
         CommandQueue commandQueue = getSuccessor().getResponse(input);
-        initCommand(input);
-        if (isCommand(COMMAND_NAME)) {
+        if (COMMAND_NAME.equals(getCommand(input))) {
             addResponse(CommandFactory.createQuitCommand());
             Application.log("I won!");
             commandQueue = getResponseQueue();

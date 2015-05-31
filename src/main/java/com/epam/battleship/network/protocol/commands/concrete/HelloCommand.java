@@ -19,12 +19,8 @@ public class HelloCommand extends Command {
     @Override
     public CommandQueue getResponse(String input) {
         CommandQueue commandQueue = getSuccessor().getResponse(input);
-        initCommand(input);
-        if (isCommand(COMMAND_NAME)) {
-            Object[] sizeOfBattlefield = getParams();
-            Dimension dimensionOfBattleField = new Dimension(
-                    Integer.parseInt((String) sizeOfBattlefield[WIDTH]),
-                    Integer.parseInt((String) sizeOfBattlefield[HEIGHT]));
+        if (COMMAND_NAME.equals(getCommand(input))) {
+            Dimension dimensionOfBattleField = new Dimension(getParams(WIDTH), getParams(HEIGHT));
             GameConfig.setBattlefieldDimension(dimensionOfBattleField);
             BattleField battleField = BattleFieldFactory.getBattleField();
             battleField.createBattleField();

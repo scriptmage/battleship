@@ -2,8 +2,8 @@ package com.epam.battleship.network;
 
 public final class ConnectionData {
 
-    private String          hostName;
-    private int             portNumber;
+    private String hostName;
+    private int    portNumber;
 
     public ConnectionData(int portNumber) {
         setPortNumber(portNumber);

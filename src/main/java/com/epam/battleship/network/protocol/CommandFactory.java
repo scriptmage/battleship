@@ -1,6 +1,7 @@
 package com.epam.battleship.network.protocol;
 
 import com.epam.battleship.components.Coordinate;
+import com.epam.battleship.network.protocol.commands.CommandQueue;
 import com.epam.battleship.network.protocol.commands.concrete.EmptyCommand;
 import com.epam.battleship.network.protocol.commands.concrete.ErrorCommand;
 import com.epam.battleship.network.protocol.commands.concrete.FireCommand;
@@ -16,48 +17,70 @@ public final class CommandFactory {
     private CommandFactory() {
     }
 
-    public static ErrorCommand createErrorCommand() {
-        return new ErrorCommand();
+    public static Command createErrorCommand() {
+        Command command = new ErrorCommand();
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
-    public static ErrorCommand createErrorCommandWithMessage(String message) {
-        return new ErrorCommand(message);
+    public static Command createErrorCommandWithMessage(String message) {
+        Command command = new ErrorCommand(message);
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
-    public static WinCommand createWinCommand() {
-        return new WinCommand();
+    public static Command createWinCommand() {
+        Command command = new WinCommand();
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
-    public static HelloCommand createHelloCommand() {
-        return new HelloCommand();
+    public static Command createHelloCommand() {
+        Command command = new HelloCommand();
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
-    public static FireCommand createFireCommand() {
-        return new FireCommand();
+    public static Command createFireCommand() {
+        Command command = new FireCommand();
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
-    public static FireCommand createFireCommandWhichFireConcretePosition(Coordinate coordinate) {
-        return new FireCommand(coordinate);
+    public static Command createFireCommandWhichFireConcretePosition(Coordinate coordinate) {
+        Command command = new FireCommand(coordinate);
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
-    public static HitCommand createHitCommand() {
-        return new HitCommand();
+    public static Command createHitCommand() {
+        Command command = new HitCommand();
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
-    public static MissCommand createMissCommand() {
-        return new MissCommand();
+    public static Command createMissCommand() {
+        Command command = new MissCommand();
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
-    public static SunkCommand createSunkCommand() {
-        return new SunkCommand();
+    public static Command createSunkCommand() {
+        Command command = new SunkCommand();
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
-    public static QuitCommand createQuitCommand() {
-        return new QuitCommand();
+    public static Command createQuitCommand() {
+        Command command = new QuitCommand();
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
-    public static EmptyCommand createNullCommand() {
-        return new EmptyCommand();
+    public static Command createNullCommand() {
+        Command command = new EmptyCommand();
+        command.setResponseQueue(new CommandQueue());
+        return command;
     }
 
 }

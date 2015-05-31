@@ -47,6 +47,7 @@ public final class Coordinate {
     public int getY() {
         return positionY;
     }
+
     @Override
     public String toString() {
         return positionX + " " + positionY;

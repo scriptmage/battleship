@@ -15,8 +15,7 @@ public class QuitCommand extends Command {
 
     @Override
     public CommandQueue getResponse(String input) {
-        initCommand(input);
-        if (!isCommand(COMMAND_NAME)) {
+        if (COMMAND_NAME.equals(getCommand(input))) {
             addResponse(CommandFactory.createErrorCommandWithMessage("Unknown protocol"));
         }
         addResponse(CommandFactory.createQuitCommand());
